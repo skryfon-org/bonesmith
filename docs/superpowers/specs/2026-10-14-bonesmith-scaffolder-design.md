@@ -83,7 +83,7 @@ templates/
 
 ## 5. Kiro output
 
-Verified against Kiro docs on 2026-10-14: workspace steering lives in `.kiro/steering/*.md` with `inclusion` modes `always`, `fileMatch`, `manual` (full support in the IDE; partial in some CLI versions). Project agents live in `.kiro/agents/<name>.json` or `.md`, with fields such as `name`, `description`, `prompt`, `tools` (category tags `read`, `write`, `shell`, `web`, `subagent`), `permissions`, and `resources` (e.g. `file://.kiro/steering/**/*.md`). Exact schemas are re-checked when the implementation plan is written.
+Verified against Kiro docs on 2026-10-14: workspace steering lives in `.kiro/steering/*.md` with `inclusion` modes `always`, `auto`, `fileMatch`, `manual` (full support in the IDE; partial in some CLI versions). v1 uses only `always` and `fileMatch`. Project agents live in `.kiro/agents/<name>.json` or `.md`, with fields such as `name`, `description`, `prompt`, `tools` (category tags `read`, `write`, `shell`, `web`, `subagent`), `permissions`, and `resources` (e.g. `file://.kiro/steering/**/*.md`). Exact schemas are re-checked when the implementation plan is written.
 
 ```
 .kiro/
@@ -127,6 +127,19 @@ v1 coverage, from the 2026-10-14 check:
 
 Because of the pinning rule, all server commands and packages above are re-verified at plan time, including the exact shadcn invocation and the version pin for each.
 
+## 5b. Future: Kiro powers (not in v1)
+
+Checked 2026-10-14 against kiro.dev/docs/powers. A power is a directory with a `plugin.json` manifest (activation keywords), optional `skills/` (Agent Skills, `SKILL.md`) and optional `mcp.json`, following the open Agent Plugins spec. Kiro loads a power's tools and skills on demand when the conversation matches its keywords. (The launch blog describes `POWER.md`; the current docs use `plugin.json`, so the docs are the reference.)
+
+Possible later uses:
+- Ship UI-library MCP servers as a power so they load only when relevant, instead of living permanently in `.kiro/settings/mcp.json`.
+- Express per-technology guidance as skills, which load on demand, instead of `fileMatch` steering.
+- Publish one power per layer from the maintainer-side update agent (sub-project 3), giving teams updates without regenerating projects.
+
+Why not in v1: powers are installed by each user in their IDE and are not committed with the repo like `.kiro/` files. It is unconfirmed whether a scaffolder can install a power or scope it to a project. With at most one MCP server per project in v1, context overload is not yet a problem. A second output format would add maintenance with no confirmed gain.
+
+v1 constraint that keeps this cheap: layer content (steering text, agent prompts, MCP entries) stays plain data in `layer.json` and `kiro/`, so the same data can later also be emitted as a power directory.
+
 ## 6. Scaffolder repo layout
 
 ```
@@ -161,5 +174,6 @@ Published to public npm as `create-bonesmith`, version-tagged. Dependency versio
 - Confirm exact Kiro steering and agent schemas against current docs.
 - Define the Vite+ availability check precisely (resolve `vite-plus`, supported Node range).
 - Re-verify MCP server commands and pick version pins (section 5a), including the exact shadcn invocation.
+- Verify whether a power can be installed project-scoped or by a script (decides whether section 5b is viable).
 - Pick the prompt and flag libraries.
 - Choose the pairwise cover set and the fixed "likely real" stacks.
