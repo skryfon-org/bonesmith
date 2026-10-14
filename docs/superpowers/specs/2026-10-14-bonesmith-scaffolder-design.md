@@ -38,7 +38,7 @@ Toolchain behaviour:
 - `vite`: plain Vite, Vitest, ESLint (flat config), Prettier.
 - Selection is **strict**. Default is `vite-plus`. If Vite+ cannot be resolved or the Node version is unsupported, the tool exits with a clear error telling the user to re-run with `--toolchain vite`. There is no automatic or prompted fallback.
 
-Not in v1: CI workflow stub, plugin system for third-party layers, telemetry, self-update command, Ant Design/Chakra, Kiro specs/hooks/MCP config.
+Not in v1: CI workflow stub, plugin system for third-party layers, telemetry, self-update command, Ant Design/Chakra, Kiro specs/hooks.
 
 ## 3. CLI flow
 
@@ -73,7 +73,7 @@ templates/
         agents/               # agents for .kiro/agents
 ```
 
-`layer.json` declares: `dependencies`, `devDependencies` (versions pinned here), `scripts`, `requires`, `conflicts`, per-combination overrides (e.g. Tailwind plugin setup differs by toolchain), and the agents the layer contributes.
+`layer.json` declares: `dependencies`, `devDependencies` (versions pinned here), `scripts`, `requires`, `conflicts`, per-combination overrides (e.g. Tailwind plugin setup differs by toolchain), the agents the layer contributes, and an optional `mcpServers` entry (see section 5a).
 
 ### Merge rules
 - `package.json`: deep merge.
@@ -105,6 +105,28 @@ Composition:
 - Layers can append guidance to the shared agents and add new agents. They cannot replace the shared agents. Agent name collisions between layers are a resolve-time error.
 - `feature-builder` stays independent of the tech agents in v1. Its prompt only mentions them as pointers.
 
+## 5a. MCP servers
+
+A layer may declare an MCP server for its library. The renderer merges all declared servers into one workspace file, `.kiro/settings/mcp.json` (Kiro's workspace MCP location, verified 2026-10-14; agents may also carry an `mcpServers` field, and workspace JSON ranks below agent config in load priority).
+
+Rules:
+- **Official servers only in v1.** A server is included only if the library's own maintainers publish it. Third-party or community servers are not shipped by default.
+- **Pinned versions.** The server package version is pinned in `layer.json` (no `@latest`, no unpinned `npx -y`), so generated projects don't execute drifting code. Pins are part of what the update agent bumps.
+- **Present only when the layer is chosen.** No entry for "none" options.
+- **Tech agents reference their server.** `ui-expert` lists its library's server in `mcpServers`, so the agent and the server stay paired.
+- **Generated projects are told about it.** `tech.md` lists the configured MCP servers so users know what runs on their machine.
+
+v1 coverage, from the 2026-10-14 check:
+
+| Layer | Official MCP server | v1 |
+|---|---|---|
+| ui/shadcn | shadcn MCP (`ui.shadcn.com/docs/mcp`) | Included |
+| ui/mui | `@mui/mcp` | Included |
+| ui/mantine | `@mantine/mcp-server` | Included |
+| routing/*, state/*, styling/*, toolchain/* | None found | Not included; revisit when an official server appears |
+
+Because of the pinning rule, all server commands and packages above are re-verified at plan time, including the exact shadcn invocation and the version pin for each.
+
 ## 6. Scaffolder repo layout
 
 ```
@@ -126,7 +148,7 @@ TypeScript on Node (current LTS and newer). Each of `resolve`, `render`, `instal
 ## 7. Testing
 
 1. **Unit** (every change): `resolve` rejects each invalid pair; deep merge of `package.json`; anchor patching fails on missing or duplicate anchors; duplicate-file detection.
-2. **Render snapshot**: render without installing; check file lists and `.kiro` output: valid front matter, agent JSON parses, referenced steering files exist, no unresolved placeholders, and the agent set exactly matches the chosen layers (no `ui-expert` when UI is "none").
+2. **Render snapshot**: render without installing; check file lists and `.kiro` output: valid front matter, agent JSON parses, referenced steering files exist, no unresolved placeholders, and the agent set exactly matches the chosen layers (no `ui-expert` when UI is "none"). `.kiro/settings/mcp.json` contains exactly the servers of the chosen layers, each with a pinned version, and `tech.md` lists them.
 3. **Matrix** (CI, slow): scaffold, install, build, lint, test. The full product is too large, so every layer appears in at least one tested combination (pairwise-style cover), plus a fixed list of likely real stacks. Package managers rotate through combinations rather than multiplying them.
 
 Template lint in CI: every `layer.json` validates against a schema, every referenced anchor exists in base, and no two layers write the same path without a declared override.
@@ -138,5 +160,6 @@ Published to public npm as `create-bonesmith`, version-tagged. Dependency versio
 ## 9. Open items for the plan stage
 - Confirm exact Kiro steering and agent schemas against current docs.
 - Define the Vite+ availability check precisely (resolve `vite-plus`, supported Node range).
+- Re-verify MCP server commands and pick version pins (section 5a), including the exact shadcn invocation.
 - Pick the prompt and flag libraries.
 - Choose the pairwise cover set and the fixed "likely real" stacks.
