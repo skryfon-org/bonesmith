@@ -1,0 +1,88 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Tailwind CSS",
+  "hint": "v4, utility classes",
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "tailwindcss": "4.3.3"
+  },
+  "patches": [
+    {
+      "file": "vite.config.ts",
+      "anchor": "vite-imports",
+      "content": "import tailwindcss from \"@tailwindcss/vite\";"
+    },
+    {
+      "file": "vite.config.ts",
+      "anchor": "vite-plugins",
+      "content": "tailwindcss(),"
+    }
+  ],
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "styling",
+      "content": "## Styling (Tailwind CSS)\n\n- Utility classes in JSX. Global CSS and theme tokens (`@theme`) live in `src/index.css`."
+    }
+  ],
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "patches": [
+        {
+          "file": "src/main.tsx",
+          "anchor": "imports",
+          "content": "import \"./index.css\";"
+        }
+      ]
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "packageJson": {
+        "exports": {
+          "./styles.css": "./dist/styles.css"
+        }
+      },
+      "patches": [
+        {
+          "file": ".storybook/preview.tsx",
+          "anchor": "storybook-imports",
+          "content": "import \"../src/styles.css\";"
+        }
+      ]
+    },
+    {
+      "name": "vite-library",
+      "when": {
+        "type": "library",
+        "toolchain": "vite"
+      },
+      "patches": [
+        {
+          "file": "src/index.ts",
+          "anchor": "index-exports",
+          "content": "import \"./styles.css\";"
+        }
+      ]
+    },
+    {
+      "name": "vp-library",
+      "when": {
+        "type": "library",
+        "toolchain": "vite-plus"
+      },
+      "devDependencies": {
+        "@tailwindcss/cli": "4.3.3"
+      },
+      "buildScripts": {
+        "@parcel/watcher": false
+      }
+    }
+  ]
+}

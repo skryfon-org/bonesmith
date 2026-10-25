@@ -1,0 +1,7 @@
+{
+  "label": "M",
+  "conflicts": [
+    "styling/tw",
+    "styling/js"
+  ]
+}

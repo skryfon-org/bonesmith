@@ -1,0 +1,17 @@
+{
+  "label": "U",
+  "dependencies": { "u-lib": "2.0.0" },
+  "devDependencies": { "playwright": "1.50.0" },
+  "postInstall": [["playwright", "install", "chromium"]],
+  "mcpServers": { "u": { "command": "npx", "args": ["--no", "@u/mcp@2.0.0"], "pin": "@u/mcp@2.0.0" } },
+  "patches": [
+    { "file": "src/main.tsx", "anchor": "imports", "contentFile": "imports.ts" },
+    { "file": "src/main.tsx", "anchor": "providers-open", "content": "<UProvider>" },
+    { "file": "src/main.tsx", "anchor": "providers-close", "position": "after", "content": "</UProvider>" }
+  ],
+  "steering": [
+    { "target": "tech.md", "section": "ui", "content": "## UI\n\nUse U." },
+    { "target": "structure.md", "section": "ui", "content": "## UI\n\nComponents in src/components." }
+  ],
+  "agentAppends": [{ "agent": "reviewer", "prompt": "Check U usage.", "resources": ["file://.kiro/steering/ui.md"] }]
+}

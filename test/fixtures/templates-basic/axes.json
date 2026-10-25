@@ -1,0 +1,13 @@
+{
+  "promptOrder": ["type", "toolchain", "routing", "state", "ui", "styling"],
+  "renderOrder": ["base", "type", "toolchain", "addons", "routing", "state", "styling", "ui"],
+  "axes": {
+    "type": { "flag": "--type", "message": "Project type", "default": "app" },
+    "toolchain": { "flag": "--toolchain", "message": "Toolchain", "default": "a" },
+    "routing": { "flag": "--routing", "message": "Routing", "default": "r1" },
+    "state": { "flag": "--state", "message": "State", "default": "none" },
+    "ui": { "flag": "--ui", "message": "UI library", "default": "none" },
+    "styling": { "flag": "--styling", "message": "Styling", "default": "tw" }
+  },
+  "verifyScripts": ["build", "lint", "test"]
+}

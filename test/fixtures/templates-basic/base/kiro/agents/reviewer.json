@@ -1,0 +1,1 @@
+{ "name": "reviewer", "description": "reviewer agent.", "prompt": "You are reviewer.", "tools": ["fs_read"] }

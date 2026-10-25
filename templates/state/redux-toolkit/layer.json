@@ -1,0 +1,18 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Redux Toolkit",
+  "hint": "slices, a typed store and react-redux hooks",
+  "dependencies": { "@reduxjs/toolkit": "2.13.0", "react-redux": "9.3.0" },
+  "patches": [
+    { "file": "src/main.tsx", "anchor": "imports", "content": "import { Provider } from \"react-redux\";\nimport { store } from \"./store\";" },
+    { "file": "src/main.tsx", "anchor": "providers-open", "content": "<Provider store={store}>" },
+    { "file": "src/main.tsx", "anchor": "providers-close", "position": "after", "content": "</Provider>" }
+  ],
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "state",
+      "content": "## State (Redux Toolkit)\n\n- Store in `src/store/index.ts`; one slice per feature in `src/store/<feature>Slice.ts`; typed hooks in `src/store/hooks.ts`."
+    }
+  ]
+}

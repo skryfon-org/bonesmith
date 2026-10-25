@@ -1,0 +1,68 @@
+{
+  "name": "create-bonesmith",
+  "version": "0.0.0",
+  "description": "Scaffold a ready-to-build React 19 app or component library with a matching .kiro setup.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "create-bonesmith": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "schema": "node scripts/emit-schema.ts",
+    "lint:templates": "vitest run --project lint",
+    "test:matrix": "VITEST_MATRIX=1 vitest run --project matrix",
+    "check:pack": "node scripts/check-pack.ts",
+    "readme": "node scripts/readme-flags.ts"
+  },
+  "dependencies": {
+    "@clack/prompts": "1.8.1",
+    "commander": "15.0.0",
+    "semver": "7.8.5",
+    "validate-npm-package-name": "8.0.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "@types/semver": "7.8.0",
+    "@types/validate-npm-package-name": "4.0.2",
+    "eslint": "10.13.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "5.0.5",
+    "yaml": "2.9.1"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
+  "keywords": [
+    "create",
+    "scaffold",
+    "react",
+    "vite",
+    "vite-plus",
+    "storybook",
+    "component-library",
+    "kiro",
+    "template"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skryfon-org/bonesmith.git"
+  },
+  "homepage": "https://github.com/skryfon-org/bonesmith#readme",
+  "bugs": {
+    "url": "https://github.com/skryfon-org/bonesmith/issues"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "state-expert",
+  "description": "Zustand stores in this project: store design, selectors and tests.",
+  "prompt": "You own client state in this project, built on Zustand. Create one store per domain in src/stores/ with its actions inside the store, expose narrow selectors, and use useShallow when selecting several fields. Keep server data out of stores. Every store gets a test that drives it through getState() and resets it in beforeEach. Run {{pmRun}} test after changes.",
+  "tools": ["read", "write", "shell", "grep", "glob", "code"],
+  "resources": ["file://.kiro/steering/state.md", "file://.kiro/steering/structure.md"],
+  "writes": ["src/stores/**"]
+}

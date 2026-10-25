@@ -1,0 +1,5 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "None",
+  "hint": "React state only"
+}

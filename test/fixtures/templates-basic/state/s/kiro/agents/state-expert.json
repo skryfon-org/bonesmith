@@ -1,0 +1,1 @@
+{ "name": "state-expert", "description": "state-expert agent.", "prompt": "You are state-expert.", "tools": ["fs_read"] }

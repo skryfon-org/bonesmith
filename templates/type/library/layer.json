@@ -1,0 +1,28 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Library",
+  "hint": "publishable ESM component package with Storybook",
+  "disablesAxes": ["routing", "state"],
+  "includes": ["addons/storybook"],
+  "nextSteps": "{{pmRun}} storybook",
+  "packageJson": {
+    "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+    "files": ["dist"],
+    "sideEffects": ["**/*.css"]
+  },
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "library",
+      "content": "## Library\n\n- `src/index.ts` is the public API: everything consumers may import is exported from it, nothing else is.\n- One folder per component: `src/components/<Name>/{<Name>.tsx, <Name>.test.tsx, <Name>.stories.tsx}`.\n- `dist/` is build output (published via `files`); never edit or import from it."
+    }
+  ],
+  "agentAppends": [
+    {
+      "agent": "feature-builder",
+      "prompt": "This project is a component library. A new component means: the component in src/components/<Name>/, its test, its Storybook story with a play function, and an export from src/index.ts. Never add app-only code (routing, global state, index.html).",
+      "resources": ["file://.kiro/steering/library.md", "file://.kiro/steering/storybook.md"]
+    },
+    { "agent": "reviewer", "resources": ["file://.kiro/steering/library.md"] }
+  ]
+}

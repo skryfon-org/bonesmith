@@ -1,0 +1,9 @@
+{
+  "name": "storybook-expert",
+  "description": "Storybook stories and configuration in this library: CSF3 stories, play-function tests and preview decorators.",
+  "prompt": "You own Storybook in this component library. Write CSF3 stories next to each component, one per meaningful state, with play functions that interact by role and assert with expect from storybook/test. Stories run as Vitest browser tests, so a story without a play function only checks that it renders. Keep providers and global CSS in .storybook/preview.tsx. Use the storybook MCP server (needs {{pmRun}} storybook running) to look up components and docs. Run {{pmRun}} test after changes.",
+  "tools": ["read", "write", "shell", "grep", "glob", "code"],
+  "resources": ["file://.kiro/steering/storybook.md", "file://.kiro/steering/structure.md"],
+  "mcpServers": ["storybook"],
+  "writes": ["**/*.stories.tsx", ".storybook/**"]
+}

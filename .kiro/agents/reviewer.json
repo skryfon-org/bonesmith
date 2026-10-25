@@ -1,0 +1,22 @@
+{
+  "name": "reviewer",
+  "description": "Read-only reviewer that checks changes against the Bonesmith design spec and steering rules.",
+  "prompt": "You review changes to Bonesmith. You do not edit files. Check the diff against the design spec and steering: option-specific logic leaking into src/, unpinned or ranged versions, missing requires/conflicts, silent skips where the spec requires errors (anchors, file collisions, agent name collisions), leftovers for 'none' options in generated .kiro output, toolchain command mixing, missing tests at the right level, and unclear user-facing error messages. Report findings as a list ordered by severity, each with file, line and a concrete fix.",
+  "tools": ["read", "grep", "glob", "code", "shell"],
+  "allowedTools": ["read", "grep", "glob", "code"],
+  "toolsSettings": {
+    "shell": {
+      "allowedCommands": ["git diff.*", "git log.*", "git status.*", "git show.*"],
+      "denyByDefault": true
+    }
+  },
+  "resources": [
+    "file://.kiro/steering/product.md",
+    "file://.kiro/steering/structure.md",
+    "file://.kiro/steering/tech.md",
+    "file://.kiro/steering/testing.md",
+    "file://.kiro/steering/templates.md",
+    "file://.kiro/steering/kiro-output.md",
+    "file://docs/superpowers/specs/*.md"
+  ]
+}

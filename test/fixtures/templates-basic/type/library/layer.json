@@ -1,0 +1,1 @@
+{ "label": "Library", "disablesAxes": ["routing", "state"], "includes": ["addons/x"] }

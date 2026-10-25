@@ -1,0 +1,54 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Vite+",
+  "hint": "vp: dev, build, test, lint (Oxlint) and format (Oxfmt) in one toolchain",
+  "engines": {
+    "node": "^22.18.0 || ^24.11.0 || >=26.0.0"
+  },
+  "devDependencies": {
+    "vite-plus": "1.4.0"
+  },
+  "packageJson": {
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@1.4.0",
+      "vitest": "5.0.5"
+    }
+  },
+  "scripts": {
+    "lint": "vp lint",
+    "test": "vp test run",
+    "format": "vp fmt"
+  },
+  "steering": [
+    {
+      "target": "tech.md",
+      "section": "toolchain",
+      "content": "## Toolchain: Vite+\n\n- `{{pmRun}} dev`: dev server (`vp dev`).\n- `{{pmRun}} build`: production build (`vp build`).\n- `{{pmRun}} lint`: Oxlint with type-aware rules and type checking (`vp lint`).\n- `{{pmRun}} test`: Vitest, once (`vp test run`); `vp test watch` for watch mode.\n- `{{pmRun}} format`: Oxfmt (`vp fmt`).\n- There is no ESLint or Prettier: lint and format settings live in the `lint` / `fmt` blocks of `vite.config.ts`.\n- `vite` and `vitest` are pinned to the Vite+ versions through package-manager overrides; don't add or upgrade them separately."
+    }
+  ],
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "scripts": {
+        "dev": "vp dev",
+        "build": "vp build"
+      }
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "steering": [
+        {
+          "target": "tech.md",
+          "section": "library",
+          "content": "## Library build (Vite+)\n\n- `{{pmRun}} build`: `vp pack` (tsdown) \u2192 `dist/index.js` (ESM) + `dist/index.d.ts`, configured in the `pack` block of `vite.config.ts`. `dependencies` and `peerDependencies` stay external.\n- There is no dev server for the library itself; develop components in Storybook."
+        }
+      ]
+    }
+  ]
+}

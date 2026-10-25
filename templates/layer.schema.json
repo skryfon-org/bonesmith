@@ -1,0 +1,815 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hint": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$"
+      }
+    },
+    "devDependencies": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$"
+      }
+    },
+    "peerDependencies": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "buildScripts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+      },
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "scripts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "packageJson": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/__schema0"
+      }
+    },
+    "patches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1
+          },
+          "anchor": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "position": {
+            "type": "string",
+            "enum": [
+              "before",
+              "after"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "contentFile": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "file",
+          "anchor"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "steering": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "enum": [
+              "tech.md",
+              "structure.md"
+            ]
+          },
+          "section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "section",
+          "content"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "agentAppends": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "agent": {
+            "type": "string",
+            "minLength": 1
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "agent"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "postInstall": {
+      "type": "array",
+      "items": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "mcpServers": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "minLength": 1
+              },
+              "args": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "pin": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "command",
+              "args",
+              "pin"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string",
+                "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+              },
+              "script": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "url",
+              "provider",
+              "script"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "overrides": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "requires": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "app",
+              "library"
+            ]
+          }
+        },
+        "toolchain": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "vite",
+              "vite-plus"
+            ]
+          }
+        },
+        "routing": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "react-router",
+              "tanstack-router"
+            ]
+          }
+        },
+        "state": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "none",
+              "redux-toolkit",
+              "zustand"
+            ]
+          }
+        },
+        "ui": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mantine",
+              "mui",
+              "none",
+              "shadcn"
+            ]
+          }
+        },
+        "styling": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "css-in-js",
+              "css-modules",
+              "tailwind"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "type/app",
+          "type/library",
+          "toolchain/vite",
+          "toolchain/vite-plus",
+          "routing/react-router",
+          "routing/tanstack-router",
+          "state/none",
+          "state/redux-toolkit",
+          "state/zustand",
+          "ui/mantine",
+          "ui/mui",
+          "ui/none",
+          "ui/shadcn",
+          "styling/css-in-js",
+          "styling/css-modules",
+          "styling/tailwind"
+        ]
+      }
+    },
+    "disablesAxes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "type",
+          "toolchain",
+          "routing",
+          "state",
+          "ui",
+          "styling"
+        ]
+      }
+    },
+    "includes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^addons\\/[a-z0-9][a-z0-9-]*$"
+      }
+    },
+    "engines": {
+      "type": "object",
+      "properties": {
+        "node": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "node"
+      ],
+      "additionalProperties": false
+    },
+    "steeringSections": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "enum": [
+          "tech.md",
+          "structure.md"
+        ]
+      },
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "nextSteps": {
+      "type": "string"
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "when": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "app",
+                      "library"
+                    ]
+                  },
+                  {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "app",
+                        "library"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "toolchain": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "vite",
+                      "vite-plus"
+                    ]
+                  },
+                  {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "vite",
+                        "vite-plus"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "routing": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "react-router",
+                      "tanstack-router"
+                    ]
+                  },
+                  {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "react-router",
+                        "tanstack-router"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "state": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "redux-toolkit",
+                      "zustand"
+                    ]
+                  },
+                  {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "none",
+                        "redux-toolkit",
+                        "zustand"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "ui": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "mantine",
+                      "mui",
+                      "none",
+                      "shadcn"
+                    ]
+                  },
+                  {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "mantine",
+                        "mui",
+                        "none",
+                        "shadcn"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "styling": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "css-in-js",
+                      "css-modules",
+                      "tailwind"
+                    ]
+                  },
+                  {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "css-in-js",
+                        "css-modules",
+                        "tailwind"
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "dependencies": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$"
+            }
+          },
+          "devDependencies": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$"
+            }
+          },
+          "peerDependencies": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "buildScripts": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+            },
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          },
+          "scripts": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "packageJson": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          "patches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "anchor": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]+$"
+                },
+                "position": {
+                  "type": "string",
+                  "enum": [
+                    "before",
+                    "after"
+                  ]
+                },
+                "content": {
+                  "type": "string"
+                },
+                "contentFile": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "file",
+                "anchor"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "steering": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "enum": [
+                    "tech.md",
+                    "structure.md"
+                  ]
+                },
+                "section": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "content": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "target",
+                "section",
+                "content"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "agentAppends": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "agent": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "prompt": {
+                  "type": "string"
+                },
+                "resources": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "agent"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "postInstall": {
+            "type": "array",
+            "items": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "mcpServers": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]*$"
+            },
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "command": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "args": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "pin": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "command",
+                    "args",
+                    "pin"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "pattern": "^(@[a-z0-9][a-z0-9._~-]*\\/)?[a-z0-9][a-z0-9._~-]*$"
+                    },
+                    "script": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "provider",
+                    "script"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "overrides": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "required": [
+          "name",
+          "when"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "label"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "__schema0": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema0"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/__schema0"
+          }
+        }
+      ]
+    }
+  }
+}

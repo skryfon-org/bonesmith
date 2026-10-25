@@ -1,0 +1,45 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "CSS Modules",
+  "hint": "scoped .module.css files",
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "styling",
+      "content": "## Styling (CSS Modules)\n\n- Each component has a sibling `<Component>.module.css`. Global styles and custom properties live in `src/index.css`."
+    }
+  ],
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "patches": [
+        {
+          "file": "src/main.tsx",
+          "anchor": "imports",
+          "content": "import \"./index.css\";"
+        }
+      ]
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "packageJson": {
+        "exports": {
+          "./styles.css": "./dist/styles.css"
+        }
+      },
+      "patches": [
+        {
+          "file": "src/index.ts",
+          "anchor": "index-exports",
+          "content": "export { Card, type CardProps } from \"./components/Card\";"
+        }
+      ]
+    }
+  ]
+}

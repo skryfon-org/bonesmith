@@ -1,0 +1,51 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Vite",
+  "hint": "plain Vite + Vitest, ESLint and Prettier",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "typescript-eslint": "8.72.0",
+    "vite": "8.3.5"
+  },
+  "scripts": {
+    "lint": "eslint . && tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --write ."
+  },
+  "steering": [
+    {
+      "target": "tech.md",
+      "section": "toolchain",
+      "content": "## Toolchain: Vite\n\n- `{{pmRun}} dev`: Vite dev server.\n- `{{pmRun}} build`: type-check, then `vite build`.\n- `{{pmRun}} lint`: ESLint (flat config in `eslint.config.js`) and `tsc --noEmit`.\n- `{{pmRun}} test`: Vitest, once (`vitest run`).\n- `{{pmRun}} format`: Prettier.\n- Build and test config share `vite.config.ts` (`defineConfig` from `vitest/config`); there is no separate `vitest.config.ts`."
+    }
+  ],
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "scripts": {
+        "dev": "vite",
+        "build": "tsc --noEmit && vite build"
+      }
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "steering": [
+        {
+          "target": "tech.md",
+          "section": "library",
+          "content": "## Library build (Vite)\n\n- `{{pmRun}} build`: type-check, then `vite build` in library mode (`build.lib` in `vite.config.ts`) \u2192 `dist/index.js` (ESM) + `dist/index.d.ts` from `vite-plugin-dts`. Peers listed in `package.json` are external.\n- There is no dev server for the library itself; develop components in Storybook."
+        }
+      ]
+    }
+  ]
+}

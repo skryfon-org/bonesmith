@@ -1,0 +1,13 @@
+{
+  "promptOrder": ["type", "toolchain", "routing", "state", "ui", "styling"],
+  "renderOrder": ["base", "type", "toolchain", "addons", "routing", "state", "styling", "ui"],
+  "axes": {
+    "type": { "flag": "--type", "message": "Project type", "default": "app" },
+    "toolchain": { "flag": "--toolchain", "message": "Toolchain", "default": "vite-plus" },
+    "routing": { "flag": "--routing", "message": "Routing", "default": "react-router" },
+    "state": { "flag": "--state", "message": "State", "default": "none" },
+    "ui": { "flag": "--ui", "message": "UI library", "default": "none" },
+    "styling": { "flag": "--styling", "message": "Styling", "default": "tailwind" }
+  },
+  "verifyScripts": ["build", "lint", "test"]
+}

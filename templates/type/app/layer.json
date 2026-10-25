@@ -1,0 +1,13 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "App",
+  "hint": "client-side React app",
+  "nextSteps": "{{pmRun}} dev",
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "type",
+      "content": "## App\n\n- `index.html` → `src/main.tsx` (mounts providers) → `src/App.tsx` (app shell).\n- Pages live in `src/routes/`; reusable UI in `src/components/`.\n- Keep `main.tsx` to providers and mounting; put app logic in components."
+    }
+  ]
+}

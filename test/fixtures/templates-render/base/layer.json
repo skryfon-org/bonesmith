@@ -1,0 +1,11 @@
+{
+  "label": "Base",
+  "devDependencies": { "vitest": "1.0.0", "eslint": "1.0.0" },
+  "scripts": { "test": "vitest run", "lint": "eslint ." },
+  "packageJson": { "private": true, "type": "module", "files": ["src"] },
+  "steeringSections": { "tech.md": ["toolchain", "ui", "mcp"], "structure.md": ["toolchain", "ui"] },
+  "variants": [
+    { "name": "app", "when": { "type": "app" }, "dependencies": { "react": "19.0.0" } },
+    { "name": "lib", "when": { "type": "library" }, "peerDependencies": { "react": "19.0.0" }, "devDependencies": { "react": "19.0.0" } }
+  ]
+}

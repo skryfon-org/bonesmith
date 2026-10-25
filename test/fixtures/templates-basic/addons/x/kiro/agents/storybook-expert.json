@@ -1,0 +1,1 @@
+{ "name": "storybook-expert", "description": "storybook-expert agent.", "prompt": "You are storybook-expert.", "tools": ["fs_read"] }

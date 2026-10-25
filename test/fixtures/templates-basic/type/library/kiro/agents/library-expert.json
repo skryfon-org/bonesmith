@@ -1,0 +1,1 @@
+{ "name": "library-expert", "description": "library-expert agent.", "prompt": "You are library-expert.", "tools": ["fs_read"] }

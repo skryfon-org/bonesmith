@@ -1,0 +1,149 @@
+{
+  "$schema": "../layer.schema.json",
+  "label": "Base",
+  "devDependencies": {
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "jsdom": "29.1.1",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  },
+  "packageJson": {
+    "type": "module"
+  },
+  "steeringSections": {
+    "tech.md": [
+      "toolchain",
+      "library",
+      "storybook",
+      "routing",
+      "state",
+      "styling",
+      "ui",
+      "mcp"
+    ],
+    "structure.md": [
+      "type",
+      "library",
+      "routing",
+      "state",
+      "styling",
+      "ui"
+    ]
+  },
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "dependencies": {
+        "react": "19.3.1",
+        "react-dom": "19.3.1"
+      },
+      "packageJson": {
+        "private": true
+      }
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "peerDependencies": {
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0"
+      },
+      "devDependencies": {
+        "react": "19.3.1",
+        "react-dom": "19.3.1"
+      }
+    },
+    {
+      "name": "vp",
+      "when": {
+        "toolchain": "vite-plus"
+      }
+    },
+    {
+      "name": "vite",
+      "when": {
+        "toolchain": "vite"
+      }
+    },
+    {
+      "name": "vp-library",
+      "when": {
+        "type": "library",
+        "toolchain": "vite-plus",
+        "styling": [
+          "css-modules",
+          "css-in-js"
+        ]
+      },
+      "scripts": {
+        "build": "vp pack"
+      },
+      "patches": [
+        {
+          "file": "vite.config.ts",
+          "anchor": "vite-config",
+          "contentFile": "vp-pack.ts"
+        }
+      ]
+    },
+    {
+      "name": "vp-library-tailwind",
+      "when": {
+        "type": "library",
+        "toolchain": "vite-plus",
+        "styling": "tailwind"
+      },
+      "scripts": {
+        "build": "vp pack && tailwindcss -i src/styles.css -o dist/styles.css --minify"
+      },
+      "patches": [
+        {
+          "file": "vite.config.ts",
+          "anchor": "vite-config",
+          "contentFile": "vp-pack.ts"
+        }
+      ]
+    },
+    {
+      "name": "vite-library",
+      "when": {
+        "type": "library",
+        "toolchain": "vite"
+      },
+      "devDependencies": {
+        "vite-plugin-dts": "5.1.2"
+      },
+      "scripts": {
+        "build": "tsc --noEmit && vite build"
+      },
+      "patches": [
+        {
+          "file": "vite.config.ts",
+          "anchor": "vite-imports",
+          "contentFile": "vite-lib-imports.ts"
+        },
+        {
+          "file": "vite.config.ts",
+          "anchor": "vite-plugins",
+          "content": "dts({ include: [\"src\"], exclude: [\"**/*.stories.tsx\", \"**/*.test.tsx\"] }),"
+        },
+        {
+          "file": "vite.config.ts",
+          "anchor": "vite-config",
+          "contentFile": "vite-lib-build.ts"
+        }
+      ]
+    }
+  ]
+}

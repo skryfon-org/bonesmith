@@ -1,0 +1,1 @@
+{ "name": "ui-expert", "description": "ui-expert agent.", "prompt": "You are ui-expert.", "tools": ["fs_read"] }

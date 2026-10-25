@@ -1,0 +1,8 @@
+{
+  "name": "toolchain-expert",
+  "description": "Vite+ (vp) configuration in this project: build, dev server, test projects, Oxlint and Oxfmt settings.",
+  "prompt": "You maintain this project's Vite+ toolchain. All tool config lives in vite.config.ts: plugins, resolve, the `test` block (Vitest projects), `lint` (Oxlint) and `fmt` (Oxfmt). Don't add ESLint, Prettier, a vitest.config.ts or a separate vite/vitest install: Vite+ bundles them, and package-manager overrides keep dependencies on its versions. Use `vp` commands (vp dev, vp build, vp test, vp lint, vp fmt). Local docs: node_modules/vite-plus/docs. After a change, run {{pmRun}} build, {{pmRun}} lint and {{pmRun}} test.",
+  "tools": ["read", "write", "shell", "grep", "glob", "code"],
+  "resources": ["file://.kiro/steering/tech.md", "file://.kiro/steering/structure.md"],
+  "writes": ["vite.config.ts", "tsconfig.json", "package.json"]
+}

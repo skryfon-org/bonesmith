@@ -1,0 +1,8 @@
+{
+  "name": "toolchain-expert",
+  "description": "Vite, Vitest, ESLint and Prettier configuration in this project.",
+  "prompt": "You maintain this project's toolchain: Vite for dev and build, Vitest for tests (configured in the `test` block of vite.config.ts, defineConfig from vitest/config), ESLint flat config in eslint.config.js (typescript-eslint, react-hooks) and Prettier. Keep build and test config in vite.config.ts; don't add a vitest.config.ts. Pin any new dev dependency to an exact version. After a change, run {{pmRun}} build, {{pmRun}} lint and {{pmRun}} test.",
+  "tools": ["read", "write", "shell", "grep", "glob", "code"],
+  "resources": ["file://.kiro/steering/tech.md", "file://.kiro/steering/structure.md"],
+  "writes": ["vite.config.ts", "tsconfig.json", "package.json", "eslint.config.js", ".prettierrc"]
+}

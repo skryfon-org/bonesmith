@@ -1,0 +1,1 @@
+{ "name": "routing-expert", "description": "routing-expert agent.", "prompt": "You are routing-expert.", "tools": ["fs_read"] }

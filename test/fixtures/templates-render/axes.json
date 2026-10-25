@@ -1,0 +1,10 @@
+{
+  "promptOrder": ["type", "toolchain", "ui"],
+  "renderOrder": ["base", "type", "toolchain", "addons", "ui"],
+  "axes": {
+    "type": { "flag": "--type", "message": "Project type", "default": "app" },
+    "toolchain": { "flag": "--toolchain", "message": "Toolchain", "default": "a" },
+    "ui": { "flag": "--ui", "message": "UI library", "default": "none" }
+  },
+  "verifyScripts": ["build", "lint", "test"]
+}

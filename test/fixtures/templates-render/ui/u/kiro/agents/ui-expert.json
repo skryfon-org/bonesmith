@@ -1,0 +1,9 @@
+{
+  "name": "ui-expert",
+  "description": "U expert.",
+  "prompt": "You know U.",
+  "tools": ["fs_read", "fs_write"],
+  "resources": ["file://.kiro/steering/ui.md", "file://.kiro/steering/structure.md"],
+  "mcpServers": ["u"],
+  "writes": ["src/**/*.tsx"]
+}

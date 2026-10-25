@@ -1,0 +1,81 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Storybook",
+  "hint": "component workshop; stories run as Vitest browser tests",
+  "devDependencies": {
+    "@storybook/addon-mcp": "10.6.3",
+    "@storybook/addon-vitest": "10.6.3",
+    "@storybook/react-vite": "10.6.3",
+    "@vitest/browser-playwright": "5.0.5",
+    "playwright": "1.64.1",
+    "storybook": "10.6.3"
+  },
+  "buildScripts": {
+    "esbuild": false
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "postInstall": [
+    [
+      "playwright",
+      "install",
+      "chromium"
+    ]
+  ],
+  "mcpServers": {
+    "storybook": {
+      "url": "http://localhost:6006/mcp",
+      "provider": "@storybook/addon-mcp",
+      "script": "storybook"
+    }
+  },
+  "patches": [
+    {
+      "file": "vite.config.ts",
+      "anchor": "vite-imports",
+      "content": "import { storybookTest } from \"@storybook/addon-vitest/vitest-plugin\";"
+    },
+    {
+      "file": "vite.config.ts",
+      "anchor": "vite-test-projects",
+      "contentFile": "storybook-project.ts"
+    }
+  ],
+  "steering": [
+    {
+      "target": "tech.md",
+      "section": "storybook",
+      "content": "## Storybook\n\n- `{{pmRun}} storybook`: Storybook dev server on port 6006 (also serves the `storybook` MCP server).\n- `{{pmRun}} build-storybook`: static Storybook in `storybook-static/`.\n- `{{pmRun}} test` runs two Vitest projects: `unit` (jsdom) and `storybook` (every story, with its `play` function, in headless Chromium via Playwright)."
+    }
+  ],
+  "variants": [
+    {
+      "name": "vp",
+      "when": {
+        "toolchain": "vite-plus"
+      },
+      "patches": [
+        {
+          "file": "vite.config.ts",
+          "anchor": "vite-imports",
+          "content": "import { playwright } from \"vite-plus/test/browser-playwright\";"
+        }
+      ]
+    },
+    {
+      "name": "vite",
+      "when": {
+        "toolchain": "vite"
+      },
+      "patches": [
+        {
+          "file": "vite.config.ts",
+          "anchor": "vite-imports",
+          "content": "import { playwright } from \"@vitest/browser-playwright\";"
+        }
+      ]
+    }
+  ]
+}

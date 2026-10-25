@@ -1,0 +1,6 @@
+{
+  "label": "S",
+  "devDependencies": { "s-addon": "3.0.0" },
+  "scripts": { "storybook": "s dev" },
+  "mcpServers": { "s": { "url": "http://localhost:6006/mcp", "provider": "s-addon", "script": "storybook" } }
+}

@@ -1,0 +1,46 @@
+{
+  "label": "Base",
+  "scripts": {
+    "build": "echo build",
+    "lint": "echo lint",
+    "test": "echo test"
+  },
+  "steeringSections": {
+    "tech.md": [
+      "toolchain",
+      "styling"
+    ]
+  },
+  "variants": [
+    {
+      "name": "lib",
+      "when": {
+        "type": "library"
+      },
+      "peerDependencies": {
+        "react": "19.2.0"
+      }
+    },
+    {
+      "name": "tool-any",
+      "when": {
+        "toolchain": [
+          "a",
+          "b"
+        ]
+      },
+      "scripts": {
+        "dev": "dev"
+      }
+    },
+    {
+      "name": "with-r1",
+      "when": {
+        "routing": "r1"
+      },
+      "dependencies": {
+        "r1-lib": "1.0.0"
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "label": "Library",
+  "includes": ["addons/s"],
+  "packageJson": { "files": ["dist", "src"], "sideEffects": false }
+}

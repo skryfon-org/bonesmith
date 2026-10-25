@@ -1,0 +1,9 @@
+{
+  "promptOrder": ["type", "ui"],
+  "renderOrder": ["base", "type", "addons", "ui"],
+  "axes": {
+    "type": { "flag": "--type", "message": "Project type", "default": "app" },
+    "ui": { "flag": "--ui", "message": "UI library", "default": "none" }
+  },
+  "verifyScripts": ["build", "lint", "test"]
+}

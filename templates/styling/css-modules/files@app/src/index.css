@@ -1,0 +1,20 @@
+:root {
+  --color-text: #1f2328;
+  --color-surface: #ffffff;
+  --color-border: #d0d7de;
+  --radius: 0.5rem;
+  --space: 1rem;
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}

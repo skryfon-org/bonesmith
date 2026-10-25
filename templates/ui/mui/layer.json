@@ -1,0 +1,90 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "MUI",
+  "hint": "Material UI components (not with Tailwind or CSS-in-JS)",
+  "conflicts": [
+    "styling/tailwind",
+    "styling/css-in-js"
+  ],
+  "mcpServers": {
+    "mui": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mui/mcp@0.1.8"
+      ],
+      "pin": "@mui/mcp@0.1.8"
+    }
+  },
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "ui",
+      "content": "## UI (MUI)\n\n- Theme in `src/theme.ts`, provided in `src/main.tsx` with `CssBaseline`; app components in `src/components/`."
+    }
+  ],
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "dependencies": {
+        "@emotion/react": "11.14.0",
+        "@emotion/styled": "11.14.1",
+        "@mui/material": "9.5.0"
+      },
+      "patches": [
+        {
+          "file": "src/main.tsx",
+          "anchor": "imports",
+          "content": "import { CssBaseline, ThemeProvider } from \"@mui/material\";\nimport { theme } from \"./theme\";"
+        },
+        {
+          "file": "src/main.tsx",
+          "anchor": "providers-open",
+          "content": "<ThemeProvider theme={theme}>\n  <CssBaseline />"
+        },
+        {
+          "file": "src/main.tsx",
+          "anchor": "providers-close",
+          "position": "after",
+          "content": "</ThemeProvider>"
+        }
+      ]
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "peerDependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/material": "^9.5.0"
+      },
+      "devDependencies": {
+        "@emotion/react": "11.14.0",
+        "@emotion/styled": "11.14.1",
+        "@mui/material": "9.5.0"
+      },
+      "patches": [
+        {
+          "file": ".storybook/preview.tsx",
+          "anchor": "storybook-imports",
+          "content": "import { CssBaseline, ThemeProvider } from \"@mui/material\";\nimport { theme } from \"../src/theme\";"
+        },
+        {
+          "file": ".storybook/preview.tsx",
+          "anchor": "storybook-decorators",
+          "content": "(Story) => (\n  <ThemeProvider theme={theme}>\n    <CssBaseline />\n    <Story />\n  </ThemeProvider>\n),"
+        },
+        {
+          "file": "src/index.ts",
+          "anchor": "index-exports",
+          "content": "export { theme } from \"./theme\";"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Zustand",
+  "hint": "small hook-based stores",
+  "dependencies": { "zustand": "5.0.16" },
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "state",
+      "content": "## State (Zustand)\n\n- One store per domain in `src/stores/` (`useCounterStore` in `counter.ts`), each with a test."
+    }
+  ]
+}

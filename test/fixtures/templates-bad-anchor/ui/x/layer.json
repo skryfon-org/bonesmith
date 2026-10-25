@@ -1,0 +1,4 @@
+{
+  "label": "X",
+  "patches": [{ "file": "src/main.tsx", "anchor": "providers-open", "content": "// x provider" }]
+}

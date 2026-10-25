@@ -1,0 +1,42 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "CSS-in-JS",
+  "hint": "styled-components",
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "styling",
+      "content": "## Styling (styled-components)\n\n- Styled components live next to the component that uses them; shared tokens in `src/styles/tokens.ts`."
+    }
+  ],
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "dependencies": {
+        "styled-components": "6.6.0"
+      }
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "peerDependencies": {
+        "styled-components": "^6.6.0"
+      },
+      "devDependencies": {
+        "styled-components": "6.6.0"
+      },
+      "patches": [
+        {
+          "file": "src/index.ts",
+          "anchor": "index-exports",
+          "content": "export { Card, type CardProps } from \"./components/Card\";"
+        }
+      ]
+    }
+  ]
+}

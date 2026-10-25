@@ -1,0 +1,8 @@
+{
+  "label": "A",
+  "scripts": { "build": "a build", "dev": "a dev" },
+  "steering": [
+    { "target": "tech.md", "section": "toolchain", "content": "## Toolchain\n\nUse `{{pmRun}} build`.\n" },
+    { "target": "structure.md", "section": "toolchain", "content": "## Toolchain\n\nConfig in a.config.ts." }
+  ]
+}

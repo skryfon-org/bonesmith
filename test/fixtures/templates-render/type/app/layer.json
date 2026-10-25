@@ -1,0 +1,8 @@
+{
+  "label": "App",
+  "nextSteps": "cd {{name}} && {{pmRun}} dev",
+  "patches": [
+    { "file": "src/main.tsx", "anchor": "providers-open", "content": "<AppProvider>" },
+    { "file": "src/main.tsx", "anchor": "providers-close", "position": "after", "content": "</AppProvider>" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "React Router",
+  "hint": "v7, data router",
+  "dependencies": { "react-router": "7.18.4" },
+  "patches": [
+    { "file": "src/App.tsx", "anchor": "app-imports", "content": "import { RouterProvider } from \"react-router\";\nimport { router } from \"./router\";" },
+    { "file": "src/App.tsx", "anchor": "app-body", "content": "<RouterProvider router={router} />" }
+  ],
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "routing",
+      "content": "## Routing (React Router)\n\n- Routes are declared in `src/router.tsx` (`createBrowserRouter`); one file per page in `src/routes/`."
+    }
+  ]
+}

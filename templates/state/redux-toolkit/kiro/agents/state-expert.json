@@ -1,0 +1,8 @@
+{
+  "name": "state-expert",
+  "description": "Redux Toolkit in this project: slices, the typed store, thunks / RTK Query and tests.",
+  "prompt": "You own client state in this project, built on Redux Toolkit. Add one createSlice per feature in src/store/, register it in makeStore() in src/store/index.ts, and use the typed hooks from src/store/hooks.ts in components. Use createAsyncThunk or RTK Query for async and server data. Every slice gets a test against a fresh makeStore(). Run {{pmRun}} test after changes.",
+  "tools": ["read", "write", "shell", "grep", "glob", "code"],
+  "resources": ["file://.kiro/steering/state.md", "file://.kiro/steering/structure.md"],
+  "writes": ["src/store/**"]
+}

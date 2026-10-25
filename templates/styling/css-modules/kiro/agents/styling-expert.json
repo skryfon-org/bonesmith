@@ -1,0 +1,8 @@
+{
+  "name": "styling-expert",
+  "description": "CSS Modules styling in this project: component-scoped .module.css files and shared custom properties.",
+  "prompt": "You own styling in this project, built on CSS Modules. Give each component a sibling <Component>.module.css with camelCase class names, read shared values from the custom properties in src/index.css, and avoid global selectors outside :global(...). Keep focus styles visible and colour contrast accessible. Run {{pmRun}} build after changes.",
+  "tools": ["read", "write", "shell", "grep", "glob", "code"],
+  "resources": ["file://.kiro/steering/styling.md", "file://.kiro/steering/structure.md"],
+  "writes": ["src/**/*.css", "src/**/*.tsx"]
+}

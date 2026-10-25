@@ -1,0 +1,98 @@
+{
+  "$schema": "../../layer.schema.json",
+  "label": "Mantine",
+  "hint": "Mantine components (not with Tailwind)",
+  "conflicts": [
+    "styling/tailwind"
+  ],
+  "devDependencies": {
+    "postcss": "8.5.31",
+    "postcss-preset-mantine": "1.18.0",
+    "postcss-simple-vars": "7.0.1"
+  },
+  "mcpServers": {
+    "mantine": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mantine/mcp-server@9.7.3"
+      ],
+      "pin": "@mantine/mcp-server@9.7.3"
+    }
+  },
+  "patches": [
+    {
+      "file": "vitest.setup.ts",
+      "anchor": "test-setup",
+      "contentFile": "vitest-setup.ts"
+    }
+  ],
+  "steering": [
+    {
+      "target": "structure.md",
+      "section": "ui",
+      "content": "## UI (Mantine)\n\n- `MantineProvider` and the theme are set up in `src/main.tsx` / `src/theme.ts`; PostCSS config for Mantine in `postcss.config.mjs`."
+    }
+  ],
+  "variants": [
+    {
+      "name": "app",
+      "when": {
+        "type": "app"
+      },
+      "dependencies": {
+        "@mantine/core": "9.7.3",
+        "@mantine/hooks": "9.7.3"
+      },
+      "patches": [
+        {
+          "file": "src/main.tsx",
+          "anchor": "imports",
+          "content": "import \"@mantine/core/styles.css\";\nimport { MantineProvider } from \"@mantine/core\";\nimport { theme } from \"./theme\";"
+        },
+        {
+          "file": "src/main.tsx",
+          "anchor": "providers-open",
+          "content": "<MantineProvider theme={theme}>"
+        },
+        {
+          "file": "src/main.tsx",
+          "anchor": "providers-close",
+          "position": "after",
+          "content": "</MantineProvider>"
+        }
+      ]
+    },
+    {
+      "name": "library",
+      "when": {
+        "type": "library"
+      },
+      "peerDependencies": {
+        "@mantine/core": "^9.7.0",
+        "@mantine/hooks": "^9.7.0"
+      },
+      "devDependencies": {
+        "@mantine/core": "9.7.3",
+        "@mantine/hooks": "9.7.3"
+      },
+      "patches": [
+        {
+          "file": ".storybook/preview.tsx",
+          "anchor": "storybook-imports",
+          "content": "import \"@mantine/core/styles.css\";\nimport { MantineProvider } from \"@mantine/core\";\nimport { theme } from \"../src/theme\";"
+        },
+        {
+          "file": ".storybook/preview.tsx",
+          "anchor": "storybook-decorators",
+          "content": "(Story) => (\n  <MantineProvider theme={theme}>\n    <Story />\n  </MantineProvider>\n),"
+        },
+        {
+          "file": "src/index.ts",
+          "anchor": "index-exports",
+          "content": "export { theme } from \"./theme\";"
+        }
+      ]
+    }
+  ]
+}
